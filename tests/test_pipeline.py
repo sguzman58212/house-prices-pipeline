@@ -60,22 +60,23 @@ def test_target_positive(df, config):
 def test_preprocess_output(df, config):
     """El preprocesamiento debe devolver arrays numpy sin nulos."""
     data_cfg = config["data"]
-    X, y, feature_names = preprocess(
+    X_train, X_test, y_train, y_test, feature_names = preprocess(
         df,
         drop_cols=data_cfg["drop_cols"],
         target_col=data_cfg["target_col"],
     )
-    assert isinstance(X, np.ndarray), "X debe ser numpy array"
-    assert isinstance(y, np.ndarray), "y debe ser numpy array"
-    assert not np.isnan(X).any(), "X contiene NaN después del preprocesamiento"
-    assert not np.isnan(y).any(), "y contiene NaN"
-    assert len(feature_names) == X.shape[1], "Mismatch entre feature_names y columnas de X"
+    assert isinstance(X_train, np.ndarray), "X_train debe ser numpy array"
+    assert isinstance(y_train, np.ndarray), "y_train debe ser numpy array"
+    assert not np.isnan(X_train).any(), "X_train contiene NaN después del preprocesamiento"
+    assert not np.isnan(X_test).any(), "X_test contiene NaN después del preprocesamiento"
+    assert not np.isnan(y_train).any(), "y_train contiene NaN"
+    assert len(feature_names) == X_train.shape[1], "Mismatch entre feature_names y columnas de X"
 
 
 def test_preprocess_removes_drop_cols(df, config):
     """Las columnas con >80% nulos no deben aparecer en X."""
     data_cfg = config["data"]
-    X, y, feature_names = preprocess(
+    X_train, X_test, y_train, y_test, feature_names = preprocess(
         df,
         drop_cols=data_cfg["drop_cols"],
         target_col=data_cfg["target_col"],
