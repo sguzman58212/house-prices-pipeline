@@ -1,0 +1,24 @@
+data:
+  path: "data/train.csv"
+  target_col: "SalePrice"
+  test_size: 0.2
+  random_state: 42
+  # Columnas con >80% nulos: se eliminan directamente
+  drop_cols:
+    - PoolQC
+    - MiscFeature
+    - Alley
+    - Fence
+    - MasVnrType
+
+model:
+  n_estimators: 300
+  max_depth: 5
+  learning_rate: 0.05
+  subsample: 0.8
+  random_state: 42
+
+mlflow:
+  experiment_name: "house-prices-experiment"
+  model_name: "house-prices-gbr"
+  tracking_uri: "mlruns"

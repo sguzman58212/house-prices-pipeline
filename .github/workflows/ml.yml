@@ -1,0 +1,43 @@
+name: ML Pipeline CI/CD — House Prices
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  ml-pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v3
+
+      - name: Configurar Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Instalar dependencias
+        run: make install
+
+      - name: Lint del código
+        run: make lint
+
+      - name: Ejecutar pruebas (sin test de mlruns)
+        run: pytest tests/ -v -k "not mlruns_exists"
+
+      - name: Entrenar modelo
+        run: make train
+
+      - name: Ejecutar pruebas completas (incluye validación mlruns)
+        run: make test
+
+      - name: Guardar modelo como artefacto del workflow
+        uses: actions/upload-artifact@v3
+        with:
+          name: mlflow-model-house-prices
+          path: mlruns/
+          retention-days: 7
