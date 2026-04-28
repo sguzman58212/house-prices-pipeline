@@ -22,7 +22,6 @@ import traceback
 import mlflow
 import mlflow.sklearn
 import numpy as np
-import yaml
 from mlflow.models import infer_signature
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.metrics import mean_squared_error, r2_score

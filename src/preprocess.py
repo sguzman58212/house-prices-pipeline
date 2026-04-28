@@ -14,7 +14,6 @@ Puede ejecutarse directamente para validar el resultado del preprocesamiento:
 """
 
 import os
-import sys
 
 import numpy as np
 import pandas as pd
