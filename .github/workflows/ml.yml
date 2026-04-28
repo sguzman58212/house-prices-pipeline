@@ -36,7 +36,7 @@ jobs:
         run: make test
 
       - name: Guardar modelo como artefacto del workflow
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: mlflow-model-house-prices
           path: mlruns/
